@@ -1,0 +1,423 @@
+{
+  "source": "Seeded simulation using production initGrid, findGroup, fillAndFall and prepareStableRefill. Single-wave production points; no new scoring on refill.",
+  "seed": 123456789,
+  "simulatedGames": 900,
+  "movesPerSimulation": 34,
+  "totalSimulatedTurns": 30600,
+  "policies": {
+    "random": "uniform random valid move",
+    "thoughtful": "uniform random from top third of legal moves ranked by immediate points",
+    "greedy": "highest immediate points; no lookahead"
+  },
+  "limitations": [
+    "Bots are proxies, not human playtests. Success rates are estimates from 100 trajectories per tile-count/policy, not guarantees.",
+    "The same trajectories are evaluated against several level targets; level evaluation rows are not independent games.",
+    "Targets increase at every level; added moves at tile-count transitions compensate for fewer large groups."
+  ],
+  "results": [
+    {
+      "level": 1,
+      "types": 4,
+      "goal": 900,
+      "moves": 22,
+      "policy": "random",
+      "trials": 100,
+      "wins": 96,
+      "winRatePct": 96.0,
+      "medianScore": 1115.0
+    },
+    {
+      "level": 1,
+      "types": 4,
+      "goal": 900,
+      "moves": 22,
+      "policy": "thoughtful",
+      "trials": 100,
+      "wins": 100,
+      "winRatePct": 100.0,
+      "medianScore": 1690.0
+    },
+    {
+      "level": 1,
+      "types": 4,
+      "goal": 900,
+      "moves": 22,
+      "policy": "greedy",
+      "trials": 100,
+      "wins": 100,
+      "winRatePct": 100.0,
+      "medianScore": 2740.0
+    },
+    {
+      "level": 2,
+      "types": 4,
+      "goal": 1050,
+      "moves": 24,
+      "policy": "random",
+      "trials": 100,
+      "wins": 88,
+      "winRatePct": 88.0,
+      "medianScore": 1205.0
+    },
+    {
+      "level": 2,
+      "types": 4,
+      "goal": 1050,
+      "moves": 24,
+      "policy": "thoughtful",
+      "trials": 100,
+      "wins": 100,
+      "winRatePct": 100.0,
+      "medianScore": 1850.0
+    },
+    {
+      "level": 2,
+      "types": 4,
+      "goal": 1050,
+      "moves": 24,
+      "policy": "greedy",
+      "trials": 100,
+      "wins": 100,
+      "winRatePct": 100.0,
+      "medianScore": 2970.0
+    },
+    {
+      "level": 3,
+      "types": 4,
+      "goal": 1200,
+      "moves": 24,
+      "policy": "random",
+      "trials": 100,
+      "wins": 54,
+      "winRatePct": 54.0,
+      "medianScore": 1205.0
+    },
+    {
+      "level": 3,
+      "types": 4,
+      "goal": 1200,
+      "moves": 24,
+      "policy": "thoughtful",
+      "trials": 100,
+      "wins": 100,
+      "winRatePct": 100.0,
+      "medianScore": 1850.0
+    },
+    {
+      "level": 3,
+      "types": 4,
+      "goal": 1200,
+      "moves": 24,
+      "policy": "greedy",
+      "trials": 100,
+      "wins": 100,
+      "winRatePct": 100.0,
+      "medianScore": 2970.0
+    },
+    {
+      "level": 4,
+      "types": 4,
+      "goal": 1300,
+      "moves": 24,
+      "policy": "random",
+      "trials": 100,
+      "wins": 33,
+      "winRatePct": 33.0,
+      "medianScore": 1205.0
+    },
+    {
+      "level": 4,
+      "types": 4,
+      "goal": 1300,
+      "moves": 24,
+      "policy": "thoughtful",
+      "trials": 100,
+      "wins": 100,
+      "winRatePct": 100.0,
+      "medianScore": 1850.0
+    },
+    {
+      "level": 4,
+      "types": 4,
+      "goal": 1300,
+      "moves": 24,
+      "policy": "greedy",
+      "trials": 100,
+      "wins": 100,
+      "winRatePct": 100.0,
+      "medianScore": 2970.0
+    },
+    {
+      "level": 5,
+      "types": 5,
+      "goal": 1350,
+      "moves": 28,
+      "policy": "random",
+      "trials": 100,
+      "wins": 25,
+      "winRatePct": 25.0,
+      "medianScore": 1245.0
+    },
+    {
+      "level": 5,
+      "types": 5,
+      "goal": 1350,
+      "moves": 28,
+      "policy": "thoughtful",
+      "trials": 100,
+      "wins": 94,
+      "winRatePct": 94.0,
+      "medianScore": 1640.0
+    },
+    {
+      "level": 5,
+      "types": 5,
+      "goal": 1350,
+      "moves": 28,
+      "policy": "greedy",
+      "trials": 100,
+      "wins": 100,
+      "winRatePct": 100.0,
+      "medianScore": 2345.0
+    },
+    {
+      "level": 6,
+      "types": 5,
+      "goal": 1400,
+      "moves": 28,
+      "policy": "random",
+      "trials": 100,
+      "wins": 18,
+      "winRatePct": 18.0,
+      "medianScore": 1245.0
+    },
+    {
+      "level": 6,
+      "types": 5,
+      "goal": 1400,
+      "moves": 28,
+      "policy": "thoughtful",
+      "trials": 100,
+      "wins": 86,
+      "winRatePct": 86.0,
+      "medianScore": 1640.0
+    },
+    {
+      "level": 6,
+      "types": 5,
+      "goal": 1400,
+      "moves": 28,
+      "policy": "greedy",
+      "trials": 100,
+      "wins": 100,
+      "winRatePct": 100.0,
+      "medianScore": 2345.0
+    },
+    {
+      "level": 7,
+      "types": 5,
+      "goal": 1450,
+      "moves": 28,
+      "policy": "random",
+      "trials": 100,
+      "wins": 13,
+      "winRatePct": 13.0,
+      "medianScore": 1245.0
+    },
+    {
+      "level": 7,
+      "types": 5,
+      "goal": 1450,
+      "moves": 28,
+      "policy": "thoughtful",
+      "trials": 100,
+      "wins": 82,
+      "winRatePct": 82.0,
+      "medianScore": 1640.0
+    },
+    {
+      "level": 7,
+      "types": 5,
+      "goal": 1450,
+      "moves": 28,
+      "policy": "greedy",
+      "trials": 100,
+      "wins": 100,
+      "winRatePct": 100.0,
+      "medianScore": 2345.0
+    },
+    {
+      "level": 8,
+      "types": 5,
+      "goal": 1500,
+      "moves": 28,
+      "policy": "random",
+      "trials": 100,
+      "wins": 6,
+      "winRatePct": 6.0,
+      "medianScore": 1245.0
+    },
+    {
+      "level": 8,
+      "types": 5,
+      "goal": 1500,
+      "moves": 28,
+      "policy": "thoughtful",
+      "trials": 100,
+      "wins": 76,
+      "winRatePct": 76.0,
+      "medianScore": 1640.0
+    },
+    {
+      "level": 8,
+      "types": 5,
+      "goal": 1500,
+      "moves": 28,
+      "policy": "greedy",
+      "trials": 100,
+      "wins": 100,
+      "winRatePct": 100.0,
+      "medianScore": 2345.0
+    },
+    {
+      "level": 9,
+      "types": 6,
+      "goal": 1550,
+      "moves": 34,
+      "policy": "random",
+      "trials": 100,
+      "wins": 9,
+      "winRatePct": 9.0,
+      "medianScore": 1380.0
+    },
+    {
+      "level": 9,
+      "types": 6,
+      "goal": 1550,
+      "moves": 34,
+      "policy": "thoughtful",
+      "trials": 100,
+      "wins": 75,
+      "winRatePct": 75.0,
+      "medianScore": 1695.0
+    },
+    {
+      "level": 9,
+      "types": 6,
+      "goal": 1550,
+      "moves": 34,
+      "policy": "greedy",
+      "trials": 100,
+      "wins": 99,
+      "winRatePct": 99.0,
+      "medianScore": 2095.0
+    },
+    {
+      "level": 10,
+      "types": 6,
+      "goal": 1600,
+      "moves": 34,
+      "policy": "random",
+      "trials": 100,
+      "wins": 6,
+      "winRatePct": 6.0,
+      "medianScore": 1380.0
+    },
+    {
+      "level": 10,
+      "types": 6,
+      "goal": 1600,
+      "moves": 34,
+      "policy": "thoughtful",
+      "trials": 100,
+      "wins": 66,
+      "winRatePct": 66.0,
+      "medianScore": 1695.0
+    },
+    {
+      "level": 10,
+      "types": 6,
+      "goal": 1600,
+      "moves": 34,
+      "policy": "greedy",
+      "trials": 100,
+      "wins": 97,
+      "winRatePct": 97.0,
+      "medianScore": 2095.0
+    },
+    {
+      "level": 11,
+      "types": 6,
+      "goal": 1650,
+      "moves": 34,
+      "policy": "random",
+      "trials": 100,
+      "wins": 3,
+      "winRatePct": 3.0,
+      "medianScore": 1380.0
+    },
+    {
+      "level": 11,
+      "types": 6,
+      "goal": 1650,
+      "moves": 34,
+      "policy": "thoughtful",
+      "trials": 100,
+      "wins": 58,
+      "winRatePct": 57.99999999999999,
+      "medianScore": 1695.0
+    },
+    {
+      "level": 11,
+      "types": 6,
+      "goal": 1650,
+      "moves": 34,
+      "policy": "greedy",
+      "trials": 100,
+      "wins": 92,
+      "winRatePct": 92.0,
+      "medianScore": 2095.0
+    },
+    {
+      "level": 12,
+      "types": 6,
+      "goal": 1700,
+      "moves": 34,
+      "policy": "random",
+      "trials": 100,
+      "wins": 1,
+      "winRatePct": 1.0,
+      "medianScore": 1380.0
+    },
+    {
+      "level": 12,
+      "types": 6,
+      "goal": 1700,
+      "moves": 34,
+      "policy": "thoughtful",
+      "trials": 100,
+      "wins": 50,
+      "winRatePct": 50.0,
+      "medianScore": 1695.0
+    },
+    {
+      "level": 12,
+      "types": 6,
+      "goal": 1700,
+      "moves": 34,
+      "policy": "greedy",
+      "trials": 100,
+      "wins": 92,
+      "winRatePct": 92.0,
+      "medianScore": 2095.0
+    }
+  ],
+  "validation": "Pandas success counts independently reproduced from raw records. No missing records or duplicate type/policy/trial keys. Monotone cumulative scores; exactly 34 moves per game.",
+  "comparisonPlan": [
+    {
+      "finding": "Early stages allow inefficient choices; later stages reward choosing larger or bonus groups.",
+      "disposition": "omit",
+      "reason": "Simulation results are development evidence for a code change, not a requested analytical chart or report."
+    }
+  ]
+}

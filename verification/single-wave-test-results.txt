@@ -1,0 +1,6 @@
+PASS 120 turns: exactly one scoring event and one explosion wave per swap
+PASS Refill leaves no automatic connected triples
+PASS Constant random generator does not cause endless explosions
+PASS Score remains unchanged after the turn
+PASS White per-cell keyboard-focus border removed
+PASS No uncaught JavaScript errors

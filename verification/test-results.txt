@@ -1,0 +1,20 @@
+PASS Initial board: no automatic groups, legal move available
+PASS 450 random boards: valid for all tile counts
+PASS Both swap endpoints checked; hint lookup does not mutate cells
+PASS 45 complete turns: settled board, correct coordinates, no busy lock
+PASS Invalid swap reverses without spending a move
+PASS Pause freezes animation; restart cancels old turn safely
+PASS Opening map and switching level cancels stale animations
+PASS Finishing final level preserves all unlocked levels
+PASS Reload restores exact stable board, score and moves
+PASS Corrupted storage is validated and ignored
+PASS Pause dialog blocks gameplay
+PASS Dialog keyboard focus wraps
+PASS Escape resumes paused game
+PASS Keyboard arrows and Enter select a cell
+PASS Mobile coordinates map correctly to final cell
+PASS 390px mobile: no horizontal overflow
+PASS 320px mobile: no horizontal overflow
+PASS Small-screen map fits viewport
+PASS No uncaught browser JavaScript errors
+Browser errors: []

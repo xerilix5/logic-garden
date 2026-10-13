@@ -1,0 +1,36 @@
+const {browserOptions,GAME_URL,output,input}=require('./test-helpers.cjs');
+const {chromium}=require('playwright');const fs=require('fs');
+(async()=>{
+const browser=await chromium.launch(browserOptions());
+const page=await browser.newPage({viewport:{width:1280,height:900},reducedMotion:'reduce'});
+const errors=[];page.on('pageerror',e=>errors.push(e.message));
+const report=[];function ok(condition,label){if(!condition)throw new Error(label);report.push('PASS '+label);console.log('PASS '+label);}
+await page.goto(GAME_URL);await page.waitForTimeout(100);
+ok(await page.evaluate(()=>grid.length===7&&score===0&&movesLeft===LEVELS[0].moves&&!findGroups().length&&hasAnyMove()),'Initial board: no automatic groups, legal move available');
+ok(await page.evaluate(()=>{for(let types=4;types<=6;types++){numTypes=types;for(let i=0;i<150;i++){initGrid();if(findGroups().length||!hasAnyMove())return false;}}currentLevel=0;startLevel();return true;}),'450 random boards: valid for all tile counts');
+ok(await page.evaluate(()=>{for(let i=0;i<40;i++){initGrid();for(let y=0;y<SIZE;y++)for(let x=0;x<SIZE;x++)for(const [dx,dy]of[[1,0],[0,1]]){if(x+dx>=SIZE||y+dy>=SIZE)continue;const a=grid[y][x],b=grid[y+dy][x+dx];const predicted=!!groupIfSwapped(x,y,x+dx,y+dy);grid[y][x]=b;grid[y+dy][x+dx]=a;const actual=a.type!==b.type&&(findGroup(x,y).length>=3||findGroup(x+dx,y+dy).length>=3);grid[y][x]=a;grid[y+dy][x+dx]=b;if(predicted!==actual)return false;}}startLevel();return true;}),'Both swap endpoints checked; hint lookup does not mutate cells');
+ok(await page.evaluate(async()=>{let tested=0;for(let typeCount=4;typeCount<=6;typeCount++){currentLevel=typeCount===4?0:typeCount===5?4:8;startLevel();goalScore=1e8;for(let i=0;i<15;i++){movesLeft=100;const h=findHint();await tapCell(h[0].x,h[0].y);await tapCell(h[1].x,h[1].y);if(busy||findGroups().length||!hasAnyMove()||movesLeft!==99||grid.some((r,y)=>r.some((c,x)=>!c||c.px!==x*CELL||c.py!==y*CELL||c.alpha!==1||c.scale!==1)))return false;tested++;}}currentLevel=0;startLevel();return tested===45;}),'45 complete turns: settled board, correct coordinates, no busy lock');
+ok(await page.evaluate(async()=>{startLevel();let pair;for(let y=0;y<7&&!pair;y++)for(let x=0;x<6;x++)if(!groupIfSwapped(x,y,x+1,y)){pair=[{x,y},{x:x+1,y}];break;}const before=grid.map(r=>r.map(c=>c.type).join(',')).join(';');await tapCell(pair[0].x,pair[0].y);await tapCell(pair[1].x,pair[1].y);return movesLeft===LEVELS[0].moves&&score===0&&!busy&&grid.map(r=>r.map(c=>c.type).join(',')).join(';')===before;}),'Invalid swap reverses without spending a move');
+await page.emulateMedia({reducedMotion:'no-preference'});
+ok(await page.evaluate(async()=>{startLevel();const h=findHint();await tapCell(h[0].x,h[0].y);const turn=tapCell(h[1].x,h[1].y);showPause();const p=grid.flat().map(c=>[c.px,c.py]);await new Promise(r=>setTimeout(r,100));const frozen=grid.flat().every((c,i)=>c.px===p[i][0]&&c.py===p[i][1]);startLevel();await turn;return frozen&&score===0&&movesLeft===LEVELS[0].moves&&!busy&&!findGroups().length;}),'Pause freezes animation; restart cancels old turn safely');
+ok(await page.evaluate(async()=>{startLevel();const h=findHint();await tapCell(h[0].x,h[0].y);const turn=tapCell(h[1].x,h[1].y);showMap();currentLevel=4;startLevel();await turn;return currentLevel===4&&score===0&&movesLeft===LEVELS[4].moves&&!busy&&screen==='playing';}),'Opening map and switching level cancels stale animations');
+await page.emulateMedia({reducedMotion:'reduce'});
+ok(await page.evaluate(async()=>{currentLevel=11;unlockedLevel=11;startLevel();goalScore=1;const h=findHint();await tapCell(h[0].x,h[0].y);await tapCell(h[1].x,h[1].y);nextLevel();return unlockedLevel===11&&completed.includes(11)&&screen==='map'&&$('nextLvl').textContent==='К уровням';}),'Finishing final level preserves all unlocked levels');
+await page.evaluate(()=>{currentLevel=0;startLevel();score=100;movesLeft=15;saveProgress();});
+const fingerprint=await page.evaluate(()=>JSON.stringify(grid.map(r=>r.map(c=>({type:c.type,bonus:c.bonus})))));
+await page.reload();ok(await page.evaluate(fp=>score===100&&movesLeft===15&&JSON.stringify(grid.map(r=>r.map(c=>({type:c.type,bonus:c.bonus}))))===fp,fingerprint),'Reload restores exact stable board, score and moves');
+await page.addInitScript(()=>{localStorage.setItem('logic_garden_v2',JSON.stringify({unlockedLevel:-100,lastPlayed:999,session:{level:999,cells:[]}}));localStorage.setItem('logic_garden_settings',JSON.stringify({musicVolume:-4,sfxVolume:'bad'}));});
+await page.reload();ok(await page.evaluate(()=>currentLevel===0&&unlockedLevel===0&&musicVolume===.5&&sfxVolume===.7&&grid.length===7),'Corrupted storage is validated and ignored');
+await page.evaluate(()=>{startLevel();});await page.locator('#pauseBtn').click();ok(await page.evaluate(()=>screen==='pause'&&canvas.inert),'Pause dialog blocks gameplay');
+await page.locator('#menuFromPause').focus();await page.keyboard.press('Tab');ok(await page.evaluate(()=>document.activeElement.id==='musicVol'),'Dialog keyboard focus wraps');await page.keyboard.press('Escape');ok(await page.evaluate(()=>screen==='playing'),'Escape resumes paused game');
+await page.locator('#board').focus();await page.keyboard.press('ArrowRight');await page.keyboard.press('Enter');ok(await page.evaluate(()=>selected?.x===1&&selected?.y===0),'Keyboard arrows and Enter select a cell');
+await page.setViewportSize({width:390,height:844});await page.evaluate(()=>startLevel());const r=await page.locator('#board').boundingBox();await page.mouse.click(r.x+r.width*6.5/7,r.y+r.height*6.5/7);ok(await page.evaluate(()=>selected?.x===6&&selected?.y===6),'Mobile coordinates map correctly to final cell');
+ok(await page.evaluate(()=>document.documentElement.scrollWidth<=390),'390px mobile: no horizontal overflow');
+await page.setViewportSize({width:320,height:720});ok(await page.evaluate(()=>document.documentElement.scrollWidth<=320),'320px mobile: no horizontal overflow');await page.locator('#levelPill').click();ok(await page.evaluate(()=>{const r=document.querySelector('#mapOverlay .panel').getBoundingClientRect();return r.left>=0&&r.right<=innerWidth;}),'Small-screen map fits viewport');
+await page.screenshot({path:output('map-small.png')});
+await page.evaluate(()=>setScreen('pause'));await page.screenshot({path:output('pause-small.png')});
+await page.evaluate(()=>showOverlay(false));await page.screenshot({path:output('result-small.png')});
+await page.evaluate(()=>{setScreen('playing');$('help').open=true;});await page.screenshot({path:output('help-small.png'),fullPage:true});
+ok(errors.length===0,'No uncaught browser JavaScript errors');
+fs.writeFileSync(output('test-results.txt'),report.join('\n')+'\nBrowser errors: '+JSON.stringify(errors)+'\n');console.log(report.join('\n'));await browser.close();
+})().catch(e=>{console.error(e);process.exit(1);});

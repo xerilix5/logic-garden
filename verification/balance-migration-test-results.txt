@@ -1,0 +1,5 @@
+PASS Legacy in-progress session restarted with new balance
+PASS Opened levels, completed levels and best scores preserved
+PASS Level 2: 1050 points / 24 moves
+PASS Goals strictly increase across all 12 levels
+PASS No uncaught JavaScript errors

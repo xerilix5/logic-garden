@@ -1,0 +1,17 @@
+{
+  "name": "logic-garden",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Логический сад — автономная браузерная головоломка",
+  "scripts": {
+    "test": "node test-regression.cjs && node test-single-wave.cjs && node test-balance-migration.cjs",
+    "balance:apply": "node apply-levels.cjs",
+    "balance:simulate": "node simulate-balance.cjs"
+  },
+  "devDependencies": {
+    "playwright": "^1.56.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

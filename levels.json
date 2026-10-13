@@ -1,0 +1,62 @@
+[
+  {
+    "types": 4,
+    "goal": 900,
+    "moves": 22
+  },
+  {
+    "types": 4,
+    "goal": 1050,
+    "moves": 24
+  },
+  {
+    "types": 4,
+    "goal": 1200,
+    "moves": 24
+  },
+  {
+    "types": 4,
+    "goal": 1300,
+    "moves": 24
+  },
+  {
+    "types": 5,
+    "goal": 1350,
+    "moves": 28
+  },
+  {
+    "types": 5,
+    "goal": 1400,
+    "moves": 28
+  },
+  {
+    "types": 5,
+    "goal": 1450,
+    "moves": 28
+  },
+  {
+    "types": 5,
+    "goal": 1500,
+    "moves": 28
+  },
+  {
+    "types": 6,
+    "goal": 1550,
+    "moves": 34
+  },
+  {
+    "types": 6,
+    "goal": 1600,
+    "moves": 34
+  },
+  {
+    "types": 6,
+    "goal": 1650,
+    "moves": 34
+  },
+  {
+    "types": 6,
+    "goal": 1700,
+    "moves": 34
+  }
+]
